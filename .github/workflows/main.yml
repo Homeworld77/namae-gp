@@ -22,7 +22,7 @@ jobs:
 
     - name: Build App
       run: |
-        pyinstaller --windowed --name "NamaeGP" --icon=GP_icon.ico main.py
+        pyinstaller --windowed --name "NamaeGP" --icon=GP_icon.icns main.py
 
     - name: Create DMG
       run: |
