@@ -1,0 +1,37 @@
+# .github/workflows/macos-dmg.yml
+name: Build macOS DMG
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller -r requirements.txt
+
+    - name: Build App
+      run: |
+        pyinstaller --windowed --name "NamaeGP" --icon=GP_icon.ico main.py
+
+    - name: Create DMG
+      run: |
+        brew install create-dmg
+        create-dmg dist/NamaeGP.app
+
+    - name: Upload DMG
+      uses: actions/upload-artifact@v4
+      with:
+        name: namae-gp-dmg
+        path: *.dmg
