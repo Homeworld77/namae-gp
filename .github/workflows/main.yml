@@ -24,10 +24,17 @@ jobs:
       run: |
         pyinstaller --windowed --name "NamaeGP" --icon=GP_icon.icns main.py
 
-    - name: Create DMG
-      run: |
-        brew install create-dmg
-        create-dmg dist/NamaeGP.app
+- name: Create DMG
+  run: |
+    brew install create-dmg
+    create-dmg \
+      --volname "NamaeGP Installer" \
+      --volicon "GP_icon.icns" \
+      --window-size 500 300 \
+      --icon "NamaeGP.app" 125 150 \
+      --app-drop-link 375 150 \
+      "NamaeGP.dmg" \
+      "dist/NamaeGP.app"
 
     - name: Upload DMG
       uses: actions/upload-artifact@v4
